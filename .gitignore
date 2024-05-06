@@ -2,4 +2,5 @@
 .env
 
 #Folders
+.vscode
 check_in_env
