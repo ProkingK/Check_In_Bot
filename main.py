@@ -18,7 +18,7 @@ async def on_ready():
     print(f'Logged in as {client.user}')
     send_daily_message.start()
 
-@tasks.loop(minutes=1)
+@tasks.loop(hours=24)
 async def send_daily_message():
     guild = client.guilds[0]
     members = [member for member in guild.members if not member.bot]
@@ -32,7 +32,18 @@ async def send_daily_message():
 async def on_message(message):
     if message.author != client.user:
         if isinstance(message.channel, discord.DMChannel):
+            await message.author.send('Thank you for your response! Enjoy your day.')
             print(f'DM received from {message.author.name}: {message.content}')
+
+            user_file = os.path.join('responses', f"{message.author.display_name}.txt")
+            if not os.path.exists(user_file):
+                open(user_file, 'w').close()
+
+            day_of_week = time.strftime('%A', time.localtime())
+
+            response = f"{day_of_week}: {message.content}\n"
+            with open(user_file, 'a', encoding='utf-8') as f:
+                f.write(response)
 
 def main():
     client.run(TOKEN)
