@@ -14,6 +14,8 @@ intents.members = True
 intents.message_content = True
 client = discord.Client(intents=intents)
 
+os.makedirs('responses', exist_ok=True)
+
 @client.event
 async def on_ready():
     print(f'Logged in as {client.user}')
