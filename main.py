@@ -1,8 +1,6 @@
 import os
 import time
 import discord
-import http.server
-import socketserver
 
 from discord.ext import tasks
 from dotenv import load_dotenv
@@ -71,10 +69,7 @@ async def on_message(message):
                 f.write(response)
 
 def main():
-    Handler = http.server.SimpleHTTPRequestHandler
-    with socketserver.TCPServer(("", 8000), Handler) as httpd:
-        client .run(TOKEN)
-        httpd.serve_forever()
+    client .run(TOKEN)
 
 if __name__ == '__main__':
     main()
